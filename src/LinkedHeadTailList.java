@@ -20,6 +20,9 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	@Override
 	public void addFront(T newEntry) {
 		// TODO Auto-generated method stub
+		Node newFront = Node<T>(newEntry);
+		newFront.next = this.head;
+		head = newFront;
 		
 	}
 
@@ -68,8 +71,20 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	// WM
 	@Override
 	public int contains(T anEntry) {
-		// TODO Auto-generated method stub
-		return 0;
+		int containsIndex = -1;	//index of the instance of the entry we are seeking
+		int currPos = 1;	//current position in the chain
+		boolean found = false;	//lets us break out of the loop earlier
+		Node currentNode = head;
+		while(currentNode != null && !found) {
+			if(currentNode.data.equals(anEntry)) {
+				containsIndex = currPos;
+				found = true;
+			} else {
+				currPos++;
+				currentNode = currentNode.next;
+			}
+		}
+		return containsIndex;
 	}
 
 	// SW
@@ -82,8 +97,11 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	// WM
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean flag = false;
+		if(this.head.data == null && this.head.next == null) {
+			flag = true;
+		}
+		return flag;
 	}
 	
 	private class Node {
