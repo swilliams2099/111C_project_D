@@ -15,6 +15,8 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 		super();
 		this.head = head;
 		this.tail = tail;
+		
+		// tail = head? head = tail?
 	}
 
 	// WM
@@ -33,18 +35,30 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	// SW
 	@Override
 	public void addBack(T newEntry) {
-		// TODO Auto-generated method stub
+		
+		// need to test!
+		
+		// create "old tail" node and assign tail node to it
 		Node oldTail = tail;
+		
+		// create new tail node with new entry
 		Node newTail = new Node(newEntry, null);
+		
+		// iterate through nodes to find the node before the (old) tail
+		// which was linked to "tail"
+		// and link it to the newly created old tail
 		Node currentNode = head;
-		while(currentNode.next != null) {
-			if (currentNode.next == tail) {
-				currentNode.next = oldTail;
-			}
+		while (currentNode.next != tail) {
 			currentNode = currentNode.next;
 		}
+		currentNode.next = oldTail;
+	
+		// link old tail to new tail
 		oldTail.next = newTail;
+		
+		// assign new tail to "tail" instance variable
 		tail = newTail;
+		
 		numberOfEntries++;
 	}
 
@@ -52,6 +66,7 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	@Override
 	public T removeFront() {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -59,7 +74,14 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	@Override
 	public T removeBack() {
 		// TODO Auto-generated method stub
-		return null;
+		Node currentNode = head;
+		while(currentNode.next != tail) {
+			currentNode = currentNode.next;
+		}
+		currentNode.next = null;
+		tail = currentNode;
+		numberOfEntries--;
+		return tail.data;
 	}
 
 	// WY
@@ -79,7 +101,14 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	// SW
 	@Override
 	public void display() {
-		// TODO Auto-generated method stub
+		System.out.print("[");
+		Node currentNode = head;
+		while (currentNode.next != null) {
+			System.out.print(currentNode.data + ", ");
+			currentNode = currentNode.next;
+		} 
+		System.out.print(currentNode.next.data); // print tail without comma
+		System.out.print("]\t head=" + this.head.data + "\ttail=" + this.tail.data);
 		
 	}
 
@@ -106,7 +135,7 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	@Override
 	public int size() {
 		// TODO Auto-generated method stub
-		return 0;
+		return numberOfEntries;
 	}
 
 	// WM
