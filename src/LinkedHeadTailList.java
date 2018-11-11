@@ -4,6 +4,7 @@
 public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 
 	private Node head,tail;
+	private int numberOfEntries = 0;
 
 	// WY
 	/**
@@ -20,9 +21,12 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	@Override
 	public void addFront(T newEntry) {
 		// TODO Auto-generated method stub
-		Node newFront = Node<T>(newEntry);
+//		Node newFront = Node<T>(newEntry); // revised -SW
+		Node newFront = new Node(newEntry);
 		newFront.next = this.head;
 		head = newFront;
+		// added -SW
+		numberOfEntries++;
 		
 	}
 
@@ -30,7 +34,18 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	@Override
 	public void addBack(T newEntry) {
 		// TODO Auto-generated method stub
-		
+		Node oldTail = tail;
+		Node newTail = new Node(newEntry, null);
+		Node currentNode = head;
+		while(currentNode.next != null) {
+			if (currentNode.next == tail) {
+				currentNode.next = oldTail;
+			}
+			currentNode = currentNode.next;
+		}
+		oldTail.next = newTail;
+		tail = newTail;
+		numberOfEntries++;
 	}
 
 	// WY
@@ -109,9 +124,11 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 		private Node next; // Link to next node
 
 		private Node(T dataPortion) {
-			data = dataPortion;
-			next = null;
-		} // end constructor
+			this(dataPortion, null);
+		}
+//			data = dataPortion;
+//			next = null;
+//		} // end constructor
 
 		private Node(T dataPortion, Node nextNode) {
 			data = dataPortion;
