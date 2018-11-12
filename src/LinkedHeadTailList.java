@@ -21,18 +21,22 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 		super();
 		this.head = head;
 		this.tail = tail;
-		
-		// tail = head? head = tail?
+		numberOfEntries = 0;
 	}
 
 	// WM
 	@Override
 	public void addFront(T newEntry) {
-		// TODO Auto-generated method stub
 //		Node newFront = Node<T>(newEntry); // revised -SW
 		Node newFront = new Node(newEntry);
 		newFront.next = this.head;
 		head = newFront;
+		
+		// added initial tail reference
+		if (this.isEmpty()) {
+			tail = newFront;
+		}
+		
 		// added -SW
 		numberOfEntries++;
 		
@@ -41,31 +45,35 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	// SW
 	@Override
 	public void addBack(T newEntry) {
+
+		if (!this.isEmpty()) {
 		
-		// need to test!
+			// create "old tail" node and assign tail node to it
+			Node oldTail = tail;
+			
+			// create new tail node with new entry
+			Node newTail = new Node(newEntry, null);
+			
+			// iterate through nodes to find the node before the (old) tail
+			// which was linked to "tail"
+			// and link it to the newly created old tail
+			Node currentNode = head;
+			while (currentNode.next != null && currentNode.next != tail) {
+				currentNode = currentNode.next;
+			}
+			currentNode.next = oldTail;
 		
-		// create "old tail" node and assign tail node to it
-		Node oldTail = tail;
-		
-		// create new tail node with new entry
-		Node newTail = new Node(newEntry, null);
-		
-		// iterate through nodes to find the node before the (old) tail
-		// which was linked to "tail"
-		// and link it to the newly created old tail
-		Node currentNode = head;
-		while (currentNode.next != tail) {
-			currentNode = currentNode.next;
+			// link old tail to new tail
+			oldTail.next = newTail;
+			
+			// assign new tail to "tail" instance variable
+			tail = newTail;
+			numberOfEntries++;
+
+		} else {
+			addFront(newEntry);
 		}
-		currentNode.next = oldTail;
-	
-		// link old tail to new tail
-		oldTail.next = newTail;
-		
-		// assign new tail to "tail" instance variable
-		tail = newTail;
-		
-		numberOfEntries++;
+			
 	}
 
 	// WY
@@ -87,15 +95,20 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	// SW
 	@Override
 	public T removeBack() {
-		// TODO Auto-generated method stub
-		Node currentNode = head;
-		while(currentNode.next != tail) {
-			currentNode = currentNode.next;
+		if (!this.isEmpty()) {
+			Node currentNode = head;
+			while(currentNode.next != tail) {
+				currentNode = currentNode.next;
+			}
+			Node removedNode = currentNode.next;
+			currentNode.next = null;
+			tail = currentNode;
+			numberOfEntries--;
+			return removedNode.data;
+		} else {
+			return null;
 		}
-		currentNode.next = null;
-		tail = currentNode;
-		numberOfEntries--;
-		return tail.data;
+		
 	}
 
 	// WY
@@ -103,6 +116,8 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	public void clear() {
 		head = null;
 		tail = null;
+		// added -SW
+		numberOfEntries = 0;
 	}
 
 	// WY
@@ -135,12 +150,19 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	public void display() {
 		System.out.print("[");
 		Node currentNode = head;
-		while (currentNode.next != null) {
-			System.out.print(currentNode.data + ", ");
+		while (currentNode != null) {
+			System.out.print(currentNode.data);
+			if (currentNode.next != null) {
+				System.out.print(", ");
+			}
 			currentNode = currentNode.next;
-		} 
-		System.out.print(currentNode.next.data); // print tail without comma
-		System.out.print("]\t head=" + this.head.data + "\ttail=" + this.tail.data);
+		}
+		if (!this.isEmpty()) {
+			System.out.print("]\thead=" + this.head.data + "\ttail=" + this.tail.data);	
+		} else {
+			System.out.println("]");
+		}
+		
 		
 	}
 
@@ -148,7 +170,9 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	@Override
 	public int contains(T anEntry) {
 		int containsIndex = -1;	//index of the instance of the entry we are seeking
-		int currPos = 1;	//current position in the chain
+//		int currPos = 1;	//current position in the chain
+		// changed from 1 to 0 index --SW
+		int currPos = 0;
 		boolean found = false;	//lets us break out of the loop earlier
 		Node currentNode = head;
 		while(currentNode != null && !found) {
@@ -166,18 +190,18 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	// SW
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
 		return numberOfEntries;
 	}
 
 	// WM
 	@Override
 	public boolean isEmpty() {
-		boolean flag = false;
-		if(this.head.data == null && this.head.next == null) {
-			flag = true;
-		}
-		return flag;
+//		boolean flag = false;
+//		if(this.head.data == null && this.head.next == null) {
+//			flag = true;
+//		}
+//		return flag;
+		return numberOfEntries == 0;
 	}
 	
 	private class Node {

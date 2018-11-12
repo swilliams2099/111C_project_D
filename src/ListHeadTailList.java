@@ -1,15 +1,18 @@
 import java.util.List;
+import java.util.ArrayList;
 
 public class ListHeadTailList<T> implements HeadTailListInterface<T> {
 
-	List<T> list = new ArrayList<T>; // initialize to type ArrayList or LinkedList
+	List<T> list = new ArrayList<T>(); // initialize to type ArrayList or LinkedList
 	int head = 0;
 	int tail = list.size() - 1;
 
 	@Override
 	public void addFront(T newEntry) {
 		for (int i = tail; i > 0; i--) {
-			list[i + 1] = list[i];
+//			list[i + 1] = list[i];
+			// use get and set methods instead? -- SW
+			list.set(i + 1, list.get(i)); 
 		}
 		tail++;
 		list[0] = newEntry;

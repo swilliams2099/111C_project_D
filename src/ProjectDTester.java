@@ -72,6 +72,7 @@ public class ProjectDTester {
 		list.clear();
 		for(int i=0; i<32; i++) {
 			list.addBack(i);
+			System.out.println(list.size());
 		}
 
 		System.out.println("32\n" + list.size());
@@ -92,7 +93,9 @@ public class ProjectDTester {
 		// test removes from nonEmpty
 		System.out.println("0\n"+list.removeFront());
 		System.out.println();
+//		System.out.println("size: " + list.size());
 		System.out.println("31\n"+list.removeBack());
+//		System.out.println("size: " + list.size());
 		System.out.println();
 		System.out.println("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]	head=1	tail=30");
 		list.display();
@@ -113,25 +116,26 @@ public class ProjectDTester {
 		list.addBack(3);
 		list.addBack(8);
 		list.addBack(9);
-		list.display();
 		System.out.println("[5, 4, 3, 2, 3, 8, 9]\thead=5\ttail=9");
+		list.display();
 		System.out.println();
 	
 		list.removeFront();
 		list.removeBack();
-		list.display();
 		System.out.println("[4, 3, 2, 3, 8]\thead=4\ttail=8");
+		list.display();
+
 		System.out.println();
 		
 		System.out.println("********TESTING WITH STRINGS");
-		HeadTailListInterface<String> wordList = new LinkedHeadTail<String>();
+		HeadTailListInterface<String> wordList = new LinkedHeadTailList<String>();
 		wordList.addFront("job!");
 		wordList.addFront("Nice");
 		wordList.addFront("it!");
 		wordList.addFront("did");
 		wordList.addFront("You");
-		wordList.display();
 		System.out.println("[You, did, it!, Nice, job!]\thead=You\ttail=job!");
+		wordList.display();
 		System.out.println();
 		
 		
