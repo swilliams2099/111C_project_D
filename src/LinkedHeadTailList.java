@@ -11,6 +11,12 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	 * @param head
 	 * @param tail
 	 */
+	public LinkedHeadTailList(){
+        	numberOfEntries = 0;
+        	head = null;
+        	tail = null;
+    	}
+  
 	public LinkedHeadTailList(LinkedHeadTailList<T>.Node head, LinkedHeadTailList<T>.Node tail) {
 		super();
 		this.head = head;
@@ -64,11 +70,19 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 
 	// WY
 	@Override
-	public T removeFront() {
-		// TODO Auto-generated method stub
-		
-		return null;
-	}
+    	public T removeFront() {
+        	T entryRemoved = null;
+        	if(numberOfEntries >= 1){
+            		entryRemoved = head.data;
+            		head = head.next;
+            		numberOfEntries--;
+            		return entryRemoved;
+        	}
+        	else{
+            		return entryRemoved;
+        	}
+    	}
+
 
 	// SW
 	@Override
@@ -87,16 +101,34 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	// WY
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		head = null;
+		tail = null;
 	}
 
 	// WY
 	@Override
-	public T getEntry(int givenPosition) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    	public T getEntry(int givenPosition) {
+        	T result = null;
+        	if(givenPosition >= 0 && givenPosition < numberOfEntries) {
+            		Node currentNode = head;
+            		int currentPosition = 0;
+            		while (currentNode != null && currentPosition <= givenPosition){
+                		if(currentPosition == givenPosition){
+                    		result = currentNode.data;
+                    		currentPosition++; //stops the loop
+                		}
+                		else{
+                    			currentNode = currentNode.next;
+                    			currentPosition++;
+                		}
+            		}
+            		return result;
+        	}
+        	else {
+            		return result;
+        	}
+    	}
+
 
 	// SW
 	@Override
