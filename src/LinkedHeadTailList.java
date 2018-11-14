@@ -6,48 +6,31 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 	private Node head,tail;
 	private int numberOfEntries = 0;
 
-	// WY
-	/**
-	 * @param head
-	 * @param tail
-	 */
 	public LinkedHeadTailList(){
         	numberOfEntries = 0;
         	head = null;
         	tail = null;
     	}
-  
-	public LinkedHeadTailList(LinkedHeadTailList<T>.Node head, LinkedHeadTailList<T>.Node tail) {
-		super();
-		this.head = head;
-		this.tail = tail;
-		numberOfEntries = 0;
-	}
 
-	// WM
 	@Override
 	public void addFront(T newEntry) {
-//		Node newFront = Node<T>(newEntry); // revised -SW
 		Node newFront = new Node(newEntry);
 		newFront.next = this.head;
 		head = newFront;
-		
-		// added initial tail reference
+
 		if (this.isEmpty()) {
 			tail = newFront;
 		}
-		
-		// added -SW
+
 		numberOfEntries++;
 		
 	}
 
-	// SW
 	@Override
 	public void addBack(T newEntry) {
 
 		if (!this.isEmpty()) {
-		
+
 			// create "old tail" node and assign tail node to it
 			Node oldTail = tail;
 			
@@ -76,7 +59,6 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 			
 	}
 
-	// WY
 	@Override
     	public T removeFront() {
         	T entryRemoved = null;
@@ -92,7 +74,6 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
     	}
 
 
-	// SW
 	@Override
 	public T removeBack() {
 		if (!this.isEmpty()) {
@@ -145,7 +126,6 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
     	}
 
 
-	// SW
 	@Override
 	public void display() {
 		System.out.print("[");
@@ -166,12 +146,9 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 		
 	}
 
-	// WM
 	@Override
 	public int contains(T anEntry) {
 		int containsIndex = -1;	//index of the instance of the entry we are seeking
-//		int currPos = 1;	//current position in the chain
-		// changed from 1 to 0 index --SW
 		int currPos = 0;
 		boolean found = false;	//lets us break out of the loop earlier
 		Node currentNode = head;
@@ -187,20 +164,14 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 		return containsIndex;
 	}
 
-	// SW
+
 	@Override
 	public int size() {
 		return numberOfEntries;
 	}
 
-	// WM
 	@Override
 	public boolean isEmpty() {
-//		boolean flag = false;
-//		if(this.head.data == null && this.head.next == null) {
-//			flag = true;
-//		}
-//		return flag;
 		return numberOfEntries == 0;
 	}
 	
@@ -211,8 +182,6 @@ public class LinkedHeadTailList<T> implements HeadTailListInterface<T> {
 		private Node(T dataPortion) {
 			this(dataPortion, null);
 		}
-//			data = dataPortion;
-//			next = null;
 //		} // end constructor
 
 		private Node(T dataPortion, Node nextNode) {
